@@ -1,6 +1,7 @@
 {
   "name": "traveller-guide-monorepo",
   "version": "1.0.0",
+  "packageManager": "npm@11.6.2",
   "private": true,
   "description": "Umrah Pilgrim Management System",
   "workspaces": [
