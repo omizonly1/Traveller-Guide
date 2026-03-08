@@ -2,7 +2,7 @@
     "version": 2,
     "name": "umrah-admin",
     "buildCommand": "cd ../.. && npx turbo run build --filter=admin...",
-    "outputDirectory": "apps/admin/.next",
+    "outputDirectory": ".next",
     "framework": "nextjs",
     "installCommand": "cd ../.. && npm install"
 }
