@@ -1,0 +1,73 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Trip {
+  id             String      @id @default(uuid())
+  code           String      @unique
+  departureCity  String
+  startDate      DateTime
+  endDate        DateTime
+  leaders        String[]
+  passengers     Passenger[]
+  flights        Flight[]
+  hotels         Hotel[]
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+}
+
+model Passenger {
+  id             String      @id @default(uuid())
+  tripId         String
+  trip           Trip        @relation(fields: [tripId], references: [id])
+  firstName      String
+  lastName       String
+  passportNo     String      @unique
+  visaNo         String?
+  photoUrl       String?
+  hotelId        String?
+  hotel          Hotel?      @relation(fields: [hotelId], references: [id])
+  contactPhone   String?
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+}
+
+model Flight {
+  id             String      @id @default(uuid())
+  tripId         String
+  trip           Trip        @relation(fields: [tripId], references: [id])
+  airline        String
+  flightNumber   String
+  departureTime  DateTime
+  arrivalTime    DateTime
+  departureTerm  String?
+  arrivalTerm    String?
+  gateNumber     String?
+}
+
+model Hotel {
+  id             String      @id @default(uuid())
+  tripId         String
+  trip           Trip        @relation(fields: [tripId], references: [id])
+  nameEnglish    String
+  nameArabic     String
+  addressArabic  String
+  latitude       Float?
+  longitude      Float?
+  passengers     Passenger[]
+}
+
+model SosEvent {
+  id             String      @id @default(uuid())
+  passengerId    String
+  latitude       Float
+  longitude      Float
+  status         String      @default("OPEN")
+  createdAt      DateTime    @default(now())
+  resolvedAt     DateTime?
+}
